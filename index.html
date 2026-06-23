@@ -1,0 +1,573 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>GiftDropZone – Free Gift Card Sweepstakes</title>
+  <meta name="description" content="Enter for a chance to win free gift cards from top brands. Legitimate sweepstakes for US Android and iOS users. No purchase necessary.">
+  
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --bg: #f5f4f0;
+      --surface: #ffffff;
+      --ink: #0e0e0e;
+      --ink-sec: #3a3a3a;
+      --muted: #8a8a8a;
+      --rule: #d8d6d0;
+      --red: #e8380d;
+      --snk-bg: #0f1923;
+      --sev-bg: #1a5c28;
+      --barlow: 'Barlow Condensed', sans-serif;
+      --inter: 'Inter', sans-serif;
+    }
+    
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    
+    html { scroll-behavior: smooth; }
+    
+    body {
+      font-family: var(--inter);
+      background-color: var(--bg);
+      color: var(--ink);
+      line-height: 1.6;
+      -webkit-font-smoothing: antialiased;
+    }
+    
+    h1, h2, h3 { font-family: var(--barlow); text-transform: uppercase; }
+    h1 { font-weight: 800; letter-spacing: -0.5px; font-size: clamp(3rem, 5.5vw, 5.2rem); line-height: 0.95; }
+    h2 { font-weight: 800; font-size: clamp(1.8rem, 3.5vw, 2.6rem); }
+    
+    a { text-decoration: none; color: inherit; }
+    
+    /* 1. STICKY NAV */
+    .navbar {
+      height: 56px; background: var(--bg); border-bottom: 1px solid var(--rule);
+      position: sticky; top: 0; z-index: 100;
+    }
+    .nav-inner {
+      max-width: 1100px; margin: 0 auto; padding: 0 5vw;
+      display: flex; justify-content: space-between; align-items: center; height: 100%;
+    }
+    .nav-logo { font-family: var(--barlow); font-weight: 800; text-transform: uppercase; font-size: 1.2rem; }
+    .nav-logo span.gift { color: var(--red); }
+    .nav-logo span.dz { color: var(--ink); }
+    
+    .nav-links { display: flex; gap: 24px; }
+    .nav-links a { 
+      font-family: var(--inter); font-size: 0.8rem; font-weight: 500; text-transform: uppercase; 
+      letter-spacing: 0.3px; color: var(--muted); transition: color 0.15s; 
+    }
+    .nav-links a:hover { color: var(--ink); }
+    
+    .nav-disclosure { 
+      border: 1px solid var(--rule); padding: 4px 10px; border-radius: 2px; font-size: 0.7rem; 
+      font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; color: var(--muted); transition: color 0.15s; 
+    }
+    .nav-disclosure:hover { color: var(--ink); }
+
+    /* 2. HERO */
+    .hero-section { width: 100%; }
+    .hero-inner {
+      max-width: 1100px; margin: 0 auto; padding: 80px 5vw 70px;
+      display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center;
+    }
+    .hero-eyebrow {
+      font-family: var(--inter); font-size: 0.72rem; font-weight: 600; letter-spacing: 1.5px; 
+      text-transform: uppercase; color: var(--muted);
+      display: inline-flex; align-items: center; gap: 8px; margin-bottom: 20px;
+    }
+    .hero-eyebrow::before { content: ""; width: 20px; height: 1px; background: var(--muted); }
+    .red-em { color: var(--red); font-style: normal; }
+    .hero-sub {
+      font-family: var(--inter); font-size: 0.9rem; color: var(--ink-sec); line-height: 1.65; 
+      max-width: 360px; margin-top: 16px; margin-bottom: 30px;
+    }
+    
+    .hero-actions { display: flex; flex-direction: row; gap: 12px; flex-wrap: wrap; margin-bottom: 16px; }
+    .btn {
+      font-family: var(--inter); font-weight: 700; font-size: 0.8rem; letter-spacing: 0.8px; 
+      text-transform: uppercase; border-radius: 2px; text-decoration: none; display: inline-block; 
+      transition: opacity 0.15s, transform 0.15s; padding: 12px 24px; cursor: pointer; text-align: center; border: none;
+    }
+    .btn:active { transform: scale(0.99); }
+    .btn-filled { background: var(--ink); color: var(--surface); }
+    .btn-filled:hover { opacity: 0.85; transform: translateY(-1px); }
+    .btn-ghost { background: transparent; color: var(--ink); border: 1px solid var(--ink); }
+    .btn-ghost:hover { opacity: 0.85; transform: translateY(-1px); }
+    .hero-fineprint { font-family: var(--inter); font-size: 0.7rem; color: var(--muted); }
+
+    .stats-container { border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; display: flex; flex-direction: column; }
+    .stat-block { background: var(--surface); padding: 24px 28px; border-bottom: 1px solid var(--rule); }
+    .stat-block:last-child { border-bottom: none; }
+    .stat-num {
+      font-family: var(--barlow); font-weight: 800; font-size: 2.8rem; line-height: 1; color: var(--ink); 
+      margin-bottom: 4px; display: flex; align-items: baseline; gap: 4px; text-transform: uppercase;
+    }
+    .stat-num span { color: var(--red); }
+    .stat-num span:last-child { font-size: 2rem; }
+    .stat-label { font-family: var(--inter); font-size: 0.75rem; text-transform: uppercase; letter-spacing: 1px; font-weight: 500; color: var(--muted); }
+
+    /* 3. DEVICE BANNER */
+    #deviceBanner { max-width: 1100px; margin: 0 auto; padding: 0 5vw 20px; }
+    .banner-inner { display: flex; align-items: center; gap: 12px; padding: 12px 20px; border-radius: 2px; font-size: 0.82rem; font-weight: 500; }
+    .dot { width: 7px; height: 7px; border-radius: 50%; }
+    .dot-green { background: #166534; }
+    .dot-amber { background: #9a3412; }
+
+    /* 4. OFFERS */
+    .section-offers { max-width: 1100px; margin: 0 auto; padding: 0 5vw 80px; }
+    .offers-header { display: flex; justify-content: space-between; align-items: baseline; border-top: 1px solid var(--rule); padding-top: 18px; margin-bottom: 28px; }
+    .offers-title { font-family: var(--inter); font-size: 0.75rem; font-weight: 700; letter-spacing: 2px; text-transform: uppercase; color: var(--muted); }
+    .offers-count { font-family: var(--inter); font-size: 0.72rem; color: var(--muted); }
+    
+    .offers-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; }
+    .offer-card { background: var(--surface); display: flex; flex-direction: column; overflow: hidden; transition: transform 0.2s, z-index 0.2s; position: relative; }
+    .offer-card:hover { transform: translateY(-3px); z-index: 2; }
+    .card-first { border-radius: 4px 0 0 4px; }
+    .card-last { border-radius: 0 4px 4px 0; }
+    
+    .card-img-zone { height: 220px; width: 100%; overflow: hidden; flex-shrink: 0; display: flex; align-items: center; justify-content: center; position: relative; }
+    .sneakers { background: var(--snk-bg); }
+    .seven-eleven { background: var(--sev-bg); }
+    .sneaker-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 60% 50% at 50% 80%, rgba(232,56,13,0.18) 0%, transparent 70%); }
+    .seven-glow { position: absolute; inset: 0; background: radial-gradient(ellipse 70% 60% at 50% 90%, rgba(255,210,0,0.2) 0%, transparent 65%); }
+    
+    .card-body { padding: 26px 28px 22px; display: flex; flex-direction: column; flex: 1; }
+    .card-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+    .tag { font-family: var(--inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 1px; text-transform: uppercase; padding: 3px 8px; border-radius: 2px; }
+    .tag-device { background: var(--ink); color: var(--surface); }
+    .tag-us { background: var(--red); color: var(--surface); }
+    .tag-chance { background: transparent; color: var(--muted); border: 1px solid var(--rule); }
+    
+    .offer-title { font-family: var(--barlow); font-weight: 800; font-size: 1.7rem; text-transform: uppercase; letter-spacing: -0.2px; line-height: 1.05; margin-bottom: 10px; color: var(--ink); }
+    .offer-desc { font-family: var(--inter); font-size: 0.83rem; color: var(--ink-sec); line-height: 1.6; margin-bottom: 22px; flex: 1; }
+    
+    .card-btn {
+      display: block; width: 100%; font-family: var(--inter); font-weight: 700; font-size: 0.78rem; letter-spacing: 1px; text-transform: uppercase; padding: 14px 20px; text-align: center; text-decoration: none; border-radius: 2px; border: 1px solid transparent; cursor: pointer; transition: opacity 0.15s, transform 0.1s;
+    }
+    .card-btn:hover:not(.disabled) { opacity: 0.88; transform: translateY(-1px); }
+    .card-btn:active:not(.disabled) { transform: scale(0.99); }
+    .card-btn.disabled { background: var(--bg) !important; color: var(--muted) !important; border: 1px solid var(--rule) !important; cursor: not-allowed; pointer-events: none; }
+    
+    .fine-print { font-family: var(--inter); font-size: 0.68rem; color: var(--muted); text-align: center; margin-top: 10px; line-height: 1.5; }
+
+    /* 5. HOW IT WORKS */
+    .section-how-wrapper { width: 100%; background: var(--surface); border-top: 1px solid var(--rule); }
+    .section-how-inner { max-width: 1100px; margin: 0 auto; padding: 60px 5vw; }
+    .section-how-inner h2 { margin-bottom: 40px; }
+    .steps-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; border: 1px solid var(--rule); border-radius: 4px; overflow: hidden; }
+    .step { padding: 28px 24px; border-right: 1px solid var(--rule); }
+    .step:last-child { border-right: none; }
+    .step-num { font-family: var(--barlow); font-weight: 800; font-size: 2.5rem; color: var(--rule); line-height: 1; margin-bottom: 14px; }
+    .step-title { font-family: var(--inter); font-size: 0.85rem; font-weight: 600; color: var(--ink); margin-bottom: 6px; }
+    .step-desc { font-family: var(--inter); font-size: 0.78rem; color: var(--muted); line-height: 1.55; }
+
+    /* 6. ARTICLES */
+    .section-articles { max-width: 1100px; margin: 0 auto; padding: 60px 5vw; }
+    .articles-sub { font-family: var(--inter); font-size: 0.82rem; color: var(--muted); margin-bottom: 32px; margin-top: 10px; }
+    .articles-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+    .article-card { background: var(--surface); padding: 28px 24px; cursor: pointer; transition: transform 0.2s; position: relative; }
+    .article-card:hover { transform: translateY(-3px); z-index: 2; }
+    .article-icon { display: block; font-size: 1.8rem; margin-bottom: 16px; }
+    .article-cat { font-family: var(--inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 8px; }
+    .article-card h3 { font-family: var(--barlow); font-weight: 700; font-size: 1.15rem; text-transform: uppercase; line-height: 1.2; margin-bottom: 8px; color: var(--ink); }
+    .article-excerpt { font-family: var(--inter); font-size: 0.78rem; color: var(--muted); line-height: 1.55; margin-bottom: 16px; }
+    .article-link { font-family: var(--inter); font-size: 0.72rem; font-weight: 700; letter-spacing: 0.8px; text-transform: uppercase; color: var(--ink); display: inline-flex; align-items: center; gap: 6px; transition: color 0.15s; }
+    .article-link::after { content: "→"; }
+    .article-card:hover .article-link { color: var(--red); }
+
+    /* 7. FOOTER */
+    .footer-wrapper { width: 100%; background: var(--surface); border-top: 1px solid var(--rule); }
+    .footer-inner { max-width: 1100px; margin: 0 auto; padding: 50px 5vw; }
+    .footer-top { display: flex; justify-content: space-between; align-items: flex-start; gap: 40px; flex-wrap: wrap; margin-bottom: 36px; }
+    .footer-brand p { font-family: var(--inter); font-size: 0.78rem; color: var(--muted); margin-top: 8px; max-width: 240px; line-height: 1.6; }
+    .footer-links-wrap { display: flex; gap: 48px; }
+    .footer-col { display: flex; flex-direction: column; gap: 8px; }
+    .footer-col-head { font-family: var(--inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--muted); margin-bottom: 14px; }
+    .footer-col a { font-family: var(--inter); font-size: 0.8rem; color: var(--ink-sec); text-decoration: none; transition: color 0.15s; }
+    .footer-col a:hover { color: var(--ink); }
+    .disclosure { border-top: 1px solid var(--rule); padding-top: 24px; font-family: var(--inter); font-size: 0.72rem; color: var(--muted); line-height: 1.8; }
+    .disclosure strong { color: var(--ink-sec); }
+    .disclosure p { margin-bottom: 12px; }
+    .disclosure p:last-child { margin-bottom: 0; }
+
+    /* 8. MODAL */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(14,14,14,0.7); z-index: 300; display: none; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); -webkit-backdrop-filter: blur(4px);
+    }
+    .modal-overlay.open { display: flex; }
+    .modal-box { background: var(--surface); border-radius: 4px; max-width: 680px; width: 100%; max-height: 88vh; overflow-y: auto; padding: 44px; position: relative; }
+    .modal-close {
+      position: absolute; top: 16px; right: 16px; width: 32px; height: 32px; border-radius: 2px; background: var(--bg); border: 1px solid var(--rule); cursor: pointer; font-size: 0.9rem; color: var(--ink); display: flex; align-items: center; justify-content: center; transition: background 0.15s;
+    }
+    .modal-close:hover { background: var(--rule); }
+    .modal-cat { font-family: var(--inter); font-size: 0.65rem; font-weight: 700; letter-spacing: 1.5px; text-transform: uppercase; color: var(--red); margin-bottom: 12px; }
+    .modal-title { font-family: var(--barlow); font-weight: 800; font-size: 1.9rem; text-transform: uppercase; line-height: 1.1; margin-bottom: 24px; letter-spacing: -0.3px; color: var(--ink); }
+    .modal-body { font-family: var(--inter); font-size: 0.88rem; color: var(--ink-sec); line-height: 1.8; }
+    .modal-body h3 { font-family: var(--barlow); font-weight: 700; font-size: 1.1rem; text-transform: uppercase; margin: 20px 0 8px; color: var(--ink); }
+    .modal-body p { margin-bottom: 14px; }
+    .modal-loader { display: flex; align-items: center; gap: 12px; padding: 48px 0; color: var(--muted); font-size: 0.85rem; font-family: var(--inter); }
+    .spin { width: 18px; height: 18px; border: 2px solid var(--rule); border-top-color: var(--ink); border-radius: 50%; animation: spin 0.7s linear infinite; }
+    
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* RESPONSIVE */
+    @media (max-width: 860px) {
+      .nav-links { display: none; }
+      .hero-inner { grid-template-columns: 1fr; gap: 36px; }
+      .stats-container { display: grid; grid-template-columns: 1fr 1fr 1fr; }
+      .stat-block { border-bottom: none; border-right: 1px solid var(--rule); }
+      .stat-block:last-child { border-right: none; }
+      
+      .offers-grid { grid-template-columns: 1fr; }
+      .card-first { border-radius: 4px 4px 0 0; }
+      .card-last { border-radius: 0 0 4px 4px; }
+      
+      .steps-grid { grid-template-columns: 1fr 1fr; }
+      .step:nth-child(2) { border-right: none; }
+      .step:nth-child(1), .step:nth-child(2) { border-bottom: 1px solid var(--rule); }
+      
+      .articles-grid { grid-template-columns: 1fr; }
+      .article-card.card-first { border-radius: 4px 4px 0 0; }
+      .article-card.card-last { border-radius: 0 0 4px 4px; }
+      
+      .footer-top { flex-direction: column; }
+    }
+
+    @media (max-width: 540px) {
+      .stats-container { grid-template-columns: 1fr; }
+      .stat-block { border-right: none; border-bottom: 1px solid var(--rule); }
+      .stat-block:last-child { border-bottom: none; }
+      
+      .hero-actions { flex-direction: column; }
+      
+      .steps-grid { grid-template-columns: 1fr; }
+      .step { border-right: none; border-bottom: 1px solid var(--rule); }
+      .step:last-child { border-bottom: none; }
+      
+      .footer-links-wrap { flex-direction: column; gap: 32px; }
+      
+      .offer-card { border-radius: 4px !important; }
+      .offers-grid { gap: 16px; }
+      
+      .article-card { border-radius: 4px !important; }
+      .articles-grid { gap: 12px; }
+      
+      .modal-box { padding: 30px 24px; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      *, ::before, ::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <nav class="navbar">
+    <div class="nav-inner">
+      <div class="nav-logo"><span class="gift">GIFT</span><span class="dz">DROPZONE</span></div>
+      <div class="nav-links">
+        <a href="#offers">Offers</a>
+        <a href="#how">How It Works</a>
+        <a href="#articles">Guides</a>
+      </div>
+      <a href="#disclosure" class="nav-disclosure">Affiliate Disclosure</a>
+    </div>
+  </nav>
+
+  <section class="hero-section">
+    <div class="hero-inner">
+      <div class="hero-left">
+        <div class="hero-eyebrow">US Residents Only · Free to Enter</div>
+        <h1>Win Gift Cards From <em class="red-em">Top Brands</em></h1>
+        <p class="hero-sub">We curate legitimate free-entry gift card sweepstakes running right now. Check eligibility, enter in seconds, come back weekly for new drops.</p>
+        <div class="hero-actions">
+          <a href="#offers" class="btn btn-filled">VIEW ACTIVE OFFERS</a>
+          <a href="#how" class="btn btn-ghost">HOW IT WORKS</a>
+        </div>
+        <div class="hero-fineprint">No purchase necessary. Eligibility and device requirements apply per offer.</div>
+      </div>
+      <div class="hero-right">
+        <div class="stats-container">
+          <div class="stat-block">
+            <div class="stat-num">2<span>+</span></div>
+            <div class="stat-label">Active Offers</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num"><span>$</span>0</div>
+            <div class="stat-label">Cost to Enter</div>
+          </div>
+          <div class="stat-block">
+            <div class="stat-num">US<span>🇺🇸</span></div>
+            <div class="stat-label">Only Available</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div id="deviceBanner" style="display: none;">
+    <div class="banner-inner" id="bannerInner"></div>
+  </div>
+
+  <section id="offers" class="section-offers">
+    <div class="offers-header">
+      <div class="offers-title">Active Sweepstakes</div>
+      <div class="offers-count">2 offers live</div>
+    </div>
+    <div class="offers-grid">
+      
+      <!-- Card 1 -->
+      <div class="offer-card card-first">
+        <div class="card-img-zone sneakers">
+          <img src="https://images.unsplash.com/photo-1542291026-7eec264c27ff?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Sneakers" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1;">
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-device">Android Only</span>
+            <span class="tag tag-us">🇺🇸 US Only</span>
+            <span class="tag tag-chance">Chance to Win</span>
+          </div>
+          <h3 class="offer-title">Sneakers Gift Card Sweepstakes</h3>
+          <p class="offer-desc">Enter for a chance to win a Sneakers Gift Card. Submit your details to be entered into the draw. Available for Android users in the United States only.</p>
+          <a href="https://singingfiles.com/show.php?l=0&u=2536458&id=72846" class="card-btn" id="sneakersCTA" style="background: #0f1923; color: white;" target="_blank" rel="noopener sponsored">ENTER NOW — ANDROID REQUIRED</a>
+          <div class="fine-print">No purchase necessary. See offer for full details.</div>
+        </div>
+      </div>
+
+      <!-- Card 2 -->
+      <div class="offer-card card-last">
+        <div class="card-img-zone seven-eleven">
+          <img src="https://images.unsplash.com/photo-1563298723-dcfebaa392e3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80" alt="Convenience Store" style="width: 100%; height: 100%; object-fit: cover; position: relative; z-index: 1;">
+        </div>
+        <div class="card-body">
+          <div class="card-tags">
+            <span class="tag tag-device">iOS Only</span>
+            <span class="tag tag-us">🇺🇸 US Only</span>
+            <span class="tag tag-chance">Chance to Win</span>
+          </div>
+          <h3 class="offer-title">7-Eleven Gift Card Sweepstakes</h3>
+          <p class="offer-desc">Enter for a chance to win a 7-Eleven Gift Card. Submit your details for your entry. Available for Apple iOS users in the United States only.</p>
+          <a href="https://singingfiles.com/show.php?l=0&u=2536458&id=69083" class="card-btn" id="sevenCTA" style="background: #1a5c28; color: white;" target="_blank" rel="noopener sponsored">ENTER NOW — iPHONE REQUIRED</a>
+          <div class="fine-print">No purchase necessary. See offer for full details.</div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <section id="how" class="section-how-wrapper">
+    <div class="section-how-inner">
+      <h2>How It Works</h2>
+      <div class="steps-grid">
+        <div class="step">
+          <div class="step-num">01</div>
+          <div class="step-title">Check Eligibility</div>
+          <div class="step-desc">Each offer shows the required device and country. Confirm you qualify before clicking.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">02</div>
+          <div class="step-title">Tap to Enter</div>
+          <div class="step-desc">Click Enter on your eligible offer. You'll go directly to the official sweepstakes page.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">03</div>
+          <div class="step-title">Submit Details</div>
+          <div class="step-desc">Fill in the required information on the offer page to complete your entry.</div>
+        </div>
+        <div class="step">
+          <div class="step-num">04</div>
+          <div class="step-title">Check Back Weekly</div>
+          <div class="step-desc">New offers drop regularly. Bookmark this page so you never miss one.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="articles" class="section-articles">
+    <h2>Tips & Guides</h2>
+    <div class="articles-sub">AI-generated guides to help you get the most from free sweepstakes.</div>
+    <div class="articles-grid">
+      <div class="article-card card-first" onclick="loadArticle('maximize')">
+        <div class="article-icon">💡</div>
+        <div class="article-cat">Sweepstakes Tips</div>
+        <h3>How to Maximize Your Chances in Gift Card Sweepstakes</h3>
+        <p class="article-excerpt">Smart habits to stay organized, read eligibility rules, and enter at the right time.</p>
+        <div class="article-link">Read Guide</div>
+      </div>
+      <div class="article-card" onclick="loadArticle('scams')">
+        <div class="article-icon">🔒</div>
+        <div class="article-cat">Safety Guide</div>
+        <h3>How to Spot Legitimate Sweepstakes vs Scams</h3>
+        <p class="article-excerpt">What red flags to look for and how to verify a real offer before you enter.</p>
+        <div class="article-link">Read Guide</div>
+      </div>
+      <div class="article-card card-last" onclick="loadArticle('giftcards')">
+        <div class="article-icon">🎁</div>
+        <div class="article-cat">Gift Card Guide</div>
+        <h3>Best Ways to Use a Sneakers or 7-Eleven Gift Card</h3>
+        <p class="article-excerpt">Practical tips to get maximum value from your gift card wins.</p>
+        <div class="article-link">Read Guide</div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer-wrapper">
+    <div class="footer-inner">
+      <div class="footer-top">
+        <div class="footer-brand">
+          <div class="nav-logo"><span class="gift">GIFT</span><span class="dz">DROPZONE</span></div>
+          <p>Curated legitimate gift card sweepstakes for US mobile users.</p>
+        </div>
+        <div class="footer-links-wrap">
+          <div class="footer-col">
+            <div class="footer-col-head">Pages</div>
+            <a href="#offers">Offers</a>
+            <a href="#how">How It Works</a>
+            <a href="#articles">Tips & Guides</a>
+          </div>
+          <div class="footer-col">
+            <div class="footer-col-head">Legal</div>
+            <a href="#disclosure">Affiliate Disclosure</a>
+            <a href="#disclosure">No Purchase Necessary</a>
+            <a href="#disclosure">Eligibility</a>
+          </div>
+        </div>
+      </div>
+      <div id="disclosure" class="disclosure">
+        <p><strong>Affiliate Disclosure:</strong> GiftDropZone participates in affiliate marketing programs. When you click an offer link and complete an entry, we may receive a commission at no additional cost to you.</p>
+        <br>
+        <p><strong>No Purchase Necessary:</strong> All featured sweepstakes are entered by submitting information only. No purchase is required to enter or win. Odds of winning depend on total entries received. Void where prohibited by law.</p>
+        <br>
+        <p><strong>Eligibility:</strong> Offers are restricted by device type and country of residence as clearly labeled on each offer card. By clicking an offer, you confirm you meet the eligibility requirements.</p>
+        <br>
+        <p><strong>Content Disclosure:</strong> Articles and guides on this site are AI-assisted and provided for informational purposes only.<br>© 2024 GiftDropZone. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <div id="articleModal" class="modal-overlay">
+    <div class="modal-box">
+      <button class="modal-close" aria-label="Close Modal" onclick="closeModal()">✕</button>
+      <div id="modalCat" class="modal-cat">Category</div>
+      <h2 id="modalTitle" class="modal-title">Title</h2>
+      <div id="modalBody" class="modal-body"></div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener("DOMContentLoaded", () => {
+      // --- Device Detection ---
+      const ua = navigator.userAgent || '';
+      const isAndroid = /android/i.test(ua);
+      const isIOS = /iphone|ipad|ipod/i.test(ua);
+      
+      const banner = document.getElementById('deviceBanner');
+      const bannerInner = document.getElementById('bannerInner');
+      const sneakersCTA = document.getElementById('sneakersCTA');
+      const sevenCTA = document.getElementById('sevenCTA');
+      
+      banner.style.display = 'block';
+      
+      if (isAndroid) {
+        bannerInner.style.background = '#f0fdf4';
+        bannerInner.style.border = '1px solid #86efac';
+        bannerInner.style.color = '#166534';
+        bannerInner.innerHTML = '<div class="dot dot-green"></div><div>✅ You\'re on Android — the Sneakers Gift Card offer below is available for you!</div>';
+        
+        sevenCTA.classList.add('disabled');
+        sevenCTA.textContent = 'iOS Only — Not Available on Android';
+        sevenCTA.removeAttribute('href');
+      } else if (isIOS) {
+        bannerInner.style.background = '#f0fdf4';
+        bannerInner.style.border = '1px solid #86efac';
+        bannerInner.style.color = '#166534';
+        bannerInner.innerHTML = '<div class="dot dot-green"></div><div>✅ You\'re on iPhone/iPad — the 7-Eleven Gift Card offer below is available for you!</div>';
+        
+        sneakersCTA.classList.add('disabled');
+        sneakersCTA.textContent = 'Android Only — Not Available on iOS';
+        sneakersCTA.removeAttribute('href');
+      } else {
+        bannerInner.style.background = '#fff7ed';
+        bannerInner.style.border = '1px solid #fed7aa';
+        bannerInner.style.color = '#9a3412';
+        bannerInner.innerHTML = '<div class="dot dot-amber"></div><div>📱 These offers require a US mobile device (Android or iOS). Please visit on your smartphone to enter.</div>';
+      }
+    });
+
+    // --- Modal Logic ---
+    const articleModal = document.getElementById('articleModal');
+    const modalCat = document.getElementById('modalCat');
+    const modalTitle = document.getElementById('modalTitle');
+    const modalBody = document.getElementById('modalBody');
+
+    const topics = {
+      maximize: {
+        cat: "Sweepstakes Tips",
+        title: "How to Maximize Your Chances in Gift Card Sweepstakes",
+        prompt: "Write a helpful 400-word blog article: 'How to Maximize Your Chances in Online Gift Card Sweepstakes'. Cover: staying organized, reading eligibility requirements carefully, entering on the correct device, bookmarking trusted sites, understanding odds. Friendly informational tone. Return HTML only using <h3> tags for subheadings and <p> for paragraphs. No markdown, no backticks, no preamble."
+      },
+      scams: {
+        cat: "Safety Guide",
+        title: "How to Spot Legitimate Sweepstakes vs Scams",
+        prompt: "Write a helpful 400-word safety guide: 'How to Spot Legitimate Sweepstakes vs Scams Online'. Cover: no purchase necessary language, device and country eligibility labeling, red flags like upfront payment requests, affiliate disclosure presence, using curated listing sites. Friendly tone. Return HTML only using <h3> subheadings and <p> paragraphs. No markdown."
+      },
+      giftcards: {
+        cat: "Gift Card Guide",
+        title: "Best Ways to Use a Sneakers or 7-Eleven Gift Card",
+        prompt: "Write a helpful 400-word lifestyle guide: 'The Best Ways to Use a Sneakers or 7-Eleven Gift Card'. For Sneakers: limited releases, app-exclusive drops, planning purchases. For 7-Eleven: daily coffee and snack savings, Slurpee season, 7Rewards app stacking. Friendly tone. Return HTML only using <h3> subheadings and <p> paragraphs. No markdown."
+      }
+    };
+
+    window.closeModal = function() {
+      articleModal.classList.remove('open');
+    };
+
+    articleModal.addEventListener('click', (e) => {
+      if (e.target === articleModal) closeModal();
+    });
+
+    window.loadArticle = async function(key) {
+      const data = topics[key];
+      modalCat.textContent = data.cat;
+      modalTitle.textContent = data.title;
+      modalBody.innerHTML = '<div class="modal-loader"><div class="spin"></div>Generating guide...</div>';
+      articleModal.classList.add('open');
+
+      try {
+        const response = await fetch('https://api.anthropic.com/v1/messages', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            'anthropic-version': '2023-06-01',
+            'x-api-key': 'dummy_key_for_mock'
+          },
+          body: JSON.stringify({
+            model: 'claude-sonnet-4-6',
+            max_tokens: 1000,
+            system: "You are a blog writer for a sweepstakes tips website. Write clear, factual, reader-friendly content. Use <h3> for subheadings, <p> for paragraphs. Return only HTML — no markdown, no backticks, no explanation.",
+            messages: [{ role: 'user', content: data.prompt }]
+          })
+        });
+        
+        if (!response.ok) throw new Error('API request failed');
+        
+        const resData = await response.json();
+        modalBody.innerHTML = resData.content?.map(i => i.text || '').join('') || '<p>Article unavailable.</p>';
+      } catch (err) {
+        console.error(err);
+        modalBody.innerHTML = '<p>Article temporarily unavailable. Please try again shortly.</p>';
+      }
+    };
+  </script>
+</body>
+</html>
